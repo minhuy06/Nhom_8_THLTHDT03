@@ -1,0 +1,39 @@
+    public class Test {
+    public static void main(String[] args) {
+
+        QuanLySach manager = new QuanLySach();
+
+        System.out.println("--- BƯỚC 1: TẠO VÀ THÊM SÁCH ---");
+        
+        SachGiaoTrinh gt1 = new SachGiaoTrinh("GT001", "Cấu Trúc Dữ Liệu", "Nguyễn Văn A", 2022, 125.0, 
+                                              "Tin học", "Đại học");
+        
+        SachTieuThuyet tt1 = new SachTieuThuyet("TT001", "Mật Mã", "Dan Brown", 2003, 95.5, 
+                                                "Trinh thám", false);
+        
+        SachTieuThuyet tt2 = new SachTieuThuyet("TT002", "Dòng Thời Gian", "H.G. Wells", 1895, 80.0, 
+                                                "Khoa học viễn tưởng", true);
+
+        manager.themSach(gt1); 
+        manager.themSach(tt1);
+        manager.themSach(tt2);
+
+        System.out.println("\n--- BƯỚC 2: HIỂN THỊ DANH SÁCH ---");
+        manager.hienThiDanhSachSach(); 
+        
+        System.out.println("\n--- BƯỚC 3: TÌM KIẾM ---");
+        manager.timKiemTheoTen("Mật");
+        manager.timKiemTheoTen("Lập Trình"); 
+
+        System.out.println("\n--- BƯỚC 4: CẬP NHẬT ---");
+        manager.capNhatGiaBan("TT001", 105.99); 
+        manager.capNhatGiaBan("TT099", 50.0); 
+
+        System.out.println("\n--- BƯỚC 5: XÓA SÁCH ---");
+        manager.xoaSach("GT001"); 
+        manager.xoaSach("GT001");
+
+        System.out.println("\n--- BƯỚC CUỐI: HIỂN THỊ DANH SÁCH CÒN LẠI ---");
+        manager.hienThiDanhSachSach();
+    }
+}
