@@ -1,0 +1,46 @@
+
+import java.text.DecimalFormat;
+public abstract class Sach implements IGiaBan, IKiemKe {
+    protected String bookID;
+    protected String title;
+    protected String author;
+    
+    protected double giaCoBan;
+    
+    protected int soLuongTonKho; 
+    protected String viTriKho;
+
+
+    public Sach(String bookID, String title, String author, double giaCoBan, int soLuongTonKho, String viTriKho) {
+        this.bookID = bookID;
+        this.title = title;
+        this.author = author;
+        this.giaCoBan = giaCoBan;
+        this.soLuongTonKho = soLuongTonKho;
+        this.viTriKho = viTriKho;
+    }
+
+    public String getBookID() { return bookID; }
+    public String getTitle() { return title; }
+    public double getGiaCoBan() { return giaCoBan; }
+    public int getSoLuongTonKho() { return soLuongTonKho; }
+    public void setSoLuongTonKho(int soLuongTonKho) { this.soLuongTonKho = soLuongTonKho; }
+    
+    @Override
+    public boolean kiemTraTonKho(int soLuongToiThieu) {
+        return this.soLuongTonKho >= soLuongToiThieu;
+    }
+
+    @Override
+    public void capNhatViTri(String viTriMoi) {
+        this.viTriKho = viTriMoi;
+        System.out.println("✅ Đã chuyển sách \"" + this.title + "\" đến khu vực: [" + viTriMoi + "]");
+    }
+    
+    @Override
+    public String toString() {
+        DecimalFormat df = new DecimalFormat("#,### VNĐ");
+        return String.format("Mã: %s, Tên: %s, Tác giả: %s, Giá CB: %s, Tồn kho: %d, Vị trí: %s",
+                bookID, title, author, df.format(giaCoBan), soLuongTonKho, viTriKho);
+    }
+}

@@ -1,0 +1,57 @@
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class QuanLySachImpl implements IQuanLySach {
+    private List<Sach> danhSachSach;
+
+    public QuanLySachImpl() {
+        this.danhSachSach = new ArrayList<>();
+    }
+
+    @Override
+    public void themSach(Sach sach) {
+        if (timKiemSach(sach.getBookID()) == null) {
+            danhSachSach.add(sach);
+            System.out.println("✅ Thêm sách thành công: " + sach.getTitle());
+        } else {
+            System.out.println("❌ Thêm sách thất bại: Mã sách " + sach.getBookID() + " đã tồn tại.");
+        }
+    }
+
+    @Override
+    public Sach timKiemSach(String maSach) {
+        for (Sach sach : danhSachSach) {
+            if (sach.getBookID().equalsIgnoreCase(maSach)) {
+                return sach;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean xoaSach(String maSach) {
+        Sach sachCanXoa = timKiemSach(maSach);
+        if (sachCanXoa != null) {
+            danhSachSach.remove(sachCanXoa);
+            System.out.println("✅ Đã xoá sách có Mã " + maSach + ".");
+            return true;
+        }
+        System.out.println("❌ Xoá thất bại: Không tìm thấy sách có Mã " + maSach);
+        return false;
+    }
+
+    @Override
+    public void hienThiDanhSach() {
+        if (danhSachSach.isEmpty()) {
+            System.out.println("Danh sách sách hiện đang trống.");
+            return;
+        }
+        System.out.println("\n--- DANH SÁCH QUẢN LÝ ---");
+        for (Sach sach : danhSachSach) {
+            System.out.println(sach);
+        }
+        System.out.println("--------------------------");
+    }
+}

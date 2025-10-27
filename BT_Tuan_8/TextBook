@@ -1,0 +1,29 @@
+
+public class SachGiaoTrinh extends Sach {
+    private String monHoc;
+    private String capDo;
+    private int namXuatBan; 
+    public SachGiaoTrinh(String bookID, String title, String author, double giaCoBan, 
+                         int soLuongTonKho, String viTriKho, 
+                         String monHoc, String capDo, int namXuatBan) {
+        super(bookID, title, author, giaCoBan, soLuongTonKho, viTriKho);
+        this.monHoc = monHoc;
+        this.capDo = capDo;
+        this.namXuatBan = namXuatBan;
+    }
+    @Override
+    public double tinhGiaBan() {
+        final int NAM_HIEN_TAI = 2025;
+        final double GIA_PHU_THU_MOI_NAM = 5000.0;
+        
+        int soNamDaXuatBan = NAM_HIEN_TAI - this.namXuatBan;
+        
+        return this.giaCoBan + (Math.max(0, soNamDaXuatBan) * GIA_PHU_THU_MOI_NAM);
+    }
+    @Override
+    public String toString() {
+        return super.toString() + String.format(
+                ", Loại: Giáo Trình, Môn: %s, Cấp độ: %s, Giá Bán: %,.0f VNĐ (XB: %d)",
+                monHoc, capDo, tinhGiaBan(), namXuatBan);
+    }
+}

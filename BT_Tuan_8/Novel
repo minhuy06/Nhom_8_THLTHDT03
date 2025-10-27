@@ -1,0 +1,28 @@
+
+public class SachTieuThuyet extends Sach {
+    private String theLoai;
+    private boolean laSachSeries; 
+
+    
+    public SachTieuThuyet(String bookID, String title, String author, double giaCoBan, 
+                         int soLuongTonKho, String viTriKho, 
+                         String theLoai, boolean laSachSeries) {
+        super(bookID, title, author, giaCoBan, soLuongTonKho, viTriKho);
+        this.theLoai = theLoai;
+        this.laSachSeries = laSachSeries;
+    }
+
+    @Override
+    public double tinhGiaBan() {  
+        final double PHU_THU_SERIES = 15000.0;
+        
+        return this.giaCoBan + (laSachSeries ? PHU_THU_SERIES : 0.0);
+    }
+    @Override
+    public String toString() {
+        String seriesStatus = laSachSeries ? "Series" : "Đơn lẻ";
+        return super.toString() + String.format(
+                ", Loại: Tiểu Thuyết, Thể loại: %s, Series: %s, Giá Bán: %,.0f VNĐ",
+                theLoai, seriesStatus, tinhGiaBan());
+    }
+}
