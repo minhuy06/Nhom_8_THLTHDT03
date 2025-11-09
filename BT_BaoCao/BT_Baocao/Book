@@ -1,0 +1,65 @@
+
+
+import java.time.Year;
+enum TinhTrang {
+    MOI, CU, HONG_MAT
+}
+
+public abstract class Book implements IGiaBan, IKiemKe, BorrowBook {
+    protected String maSach;
+    protected String tieuDe;
+    protected String tacGia;
+    protected double giaCoBan;
+    protected int soLuongTonKho;
+    protected String viTriKho;
+    protected TinhTrang tinhTrang; 
+    protected int soLanMuon;      
+    protected int namXuatBan; 
+
+    private static final int NAM_HIEN_TAI = Year.now().getValue(); 
+
+    // Hàm tạo (Áp dụng các RÀNG BUỘC)
+    public Book(String maSach, String tieuDe, String tacGia, double giaCoBan, int soLuongTonKho, String viTriKho, TinhTrang tinhTrang, int namXuatBan) {
+        this.maSach = maSach;
+        this.tieuDe = tieuDe;
+        this.tacGia = tacGia;
+        this.viTriKho = viTriKho;
+        this.tinhTrang = tinhTrang;
+        this.soLanMuon = 0;
+
+        // Ràng buộc 1: Giá cơ bản > 0
+        this.giaCoBan = (giaCoBan > 0) ? giaCoBan : 1.0; 
+        if (this.giaCoBan != giaCoBan) { System.err.println("Cảnh báo: Giá cơ bản phải > 0. Đã đặt mặc định là 1.0."); }
+
+        // Ràng buộc 2 & 3: Số lượng > 0 (mặc định = 1)
+        this.soLuongTonKho = (soLuongTonKho > 0) ? soLuongTonKho : 1;
+        if (this.soLuongTonKho != soLuongTonKho) { System.err.println("Cảnh báo: Số lượng phải > 0. Đã đặt mặc định là 1."); }
+        
+        // Ràng buộc 4: Năm xuất bản <= năm hiện tại
+        setNamXuatBan(namXuatBan);
+    }
+    
+    // Setter có kiểm tra cho Năm Xuất Bản
+    public void setNamXuatBan(int namXuatBanMoi) {
+        this.namXuatBan = (namXuatBanMoi <= NAM_HIEN_TAI) ? namXuatBanMoi : NAM_HIEN_TAI;
+        if (this.namXuatBan != namXuatBanMoi) { System.err.println("Cảnh báo: Năm xuất bản không hợp lệ. Đã đặt mặc định là năm hiện tại (" + NAM_HIEN_TAI + ")."); }
+    }
+    
+    // Triển khai BorrowBook
+    @Override
+    public void tangSoLanMuon() {
+        this.soLanMuon++;
+        System.out.println("⚠️ Sách \"" + this.tieuDe + "\" đã được mượn. Tổng số lần mượn: " + this.soLanMuon);
+    }
+
+    // Các phương thức khác...
+    public abstract double tinhGiaBan(); 
+    public String getMaSach() { return maSach; }
+    public int getNamXuatBan() { return namXuatBan; }
+
+    @Override
+    public String toString() {
+        return String.format("Mã: %s, Tên: %s, Tình trạng: %s, Tồn kho: %d, SL Mượn: %d, Giá Bán: %,.0f VNĐ",
+                maSach, tieuDe, tinhTrang, soLuongTonKho, soLanMuon, tinhGiaBan());
+    }
+}
