@@ -1,0 +1,77 @@
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class BookManager implements IQuanLySach {
+    private List<Book> danhSachSach = new ArrayList<>();
+
+    // Thêm sách (Xử lý ngoại lệ Tuần 9)
+    @Override
+    public void themSach(Book sach) {
+        try {
+            if (timKiemSach(sach.getMaSach()) != null) {
+                throw new SachDaTonTaiException(sach.getMaSach());
+            }
+            danhSachSach.add(sach);
+            System.out.println("✅ Thêm sách thành công: " + sach.getTieuDe());
+        } catch (SachDaTonTaiException e) {
+            System.err.println("❌ Lỗi Thêm sách: " + e.getMessage());
+        }
+    }
+    
+    @Override
+    public Book timKiemSach(String maSach) {
+        for (Book sach : danhSachSach) {
+            if (sach.getMaSach().equalsIgnoreCase(maSach)) {
+                return sach;
+            }
+        }
+        return null;
+    }
+    
+    @Override
+    public boolean xoaSach(String maSach) {
+        Book sachToDelete = timKiemSach(maSach);
+        if (sachToDelete != null) {
+            danhSachSach.remove(sachToDelete);
+            System.out.println("✅ Đã xóa sách có mã " + maSach + ".");
+            return true;
+        }
+        System.out.println("❌ Không tìm thấy sách có mã " + maSach + ".");
+        return false;
+    }
+
+    @Override
+    public void hienThiDanhSach() {
+        if (danhSachSach.isEmpty()) {
+            System.out.println("Danh sách sách hiện đang trống.");
+            return;
+        }
+        System.out.println("\n--- DANH SÁCH QUẢN LÝ ---");
+        for (Book sach : danhSachSach) {
+            System.out.println(sach);
+        }
+        System.out.println("--------------------------");
+    }
+    
+    // Tuần 9: Thống kê số lượng theo loại
+    @Override
+    public void thongKeSoLuongTheoLoai() {
+        int demGiaoTrinh = 0;
+        int demTieuThuyet = 0;
+        
+        for (Book sach : danhSachSach) {
+            if (sach instanceof Textbook) { 
+                demGiaoTrinh++;
+            } else if (sach instanceof Novel) {
+                demTieuThuyet++;
+            }
+        }
+        System.out.println("\n--- BÁO CÁO THỐNG KÊ SÁCH ---");
+        System.out.println("Tổng số lượng sách: " + danhSachSach.size());
+        System.out.println("  - Sách Giáo Trình: " + demGiaoTrinh + " cuốn.");
+        System.out.println("  - Sách Tiểu Thuyết: " + demTieuThuyet + " cuốn.");
+        System.out.println("-----------------------------");
+    }
+}

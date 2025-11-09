@@ -1,0 +1,6 @@
+
+public class SachDaTonTaiException extends Exception {
+    public SachDaTonTaiException(String maSach) {
+        super("Mã sách " + maSach + " đã tồn tại trong hệ thống.");
+    }
+}
