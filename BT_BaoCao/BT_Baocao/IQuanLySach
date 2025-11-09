@@ -1,0 +1,8 @@
+
+public interface IQuanLySach {
+    void themSach(Book sach);
+    Book timKiemSach(String maSach);
+    boolean xoaSach(String maSach);
+    void hienThiDanhSach();
+    void thongKeSoLuongTheoLoai(); 
+}

@@ -1,0 +1,40 @@
+
+
+public class Test {
+    public static void main(String[] args) {
+        System.out.println("--- KIỂM TRA HỆ THỐNG OOP HOÀN CHỈNH ---");
+        
+        IQuanLySach quanLy = new BookManager();
+        Textbook sgk1 = new Textbook("GT001", "OOP Java", "A", 120000.0, 
+                                                50, "K1-A1", TinhTrang.MOI, 2022,
+                                                "Tin học", "ĐẠI HỌC");
+                                                
+        // Textbook 2: Dữ liệu KHÔNG hợp lệ (Năm: 2028 -> 2025, Cấp độ: Sai -> CẤP ĐỘ KHÁC)
+        Textbook sgk2 = new Textbook("GT002", "Giải Tích", "C", 80000.0, 
+                                                20, "K1-A2", TinhTrang.CU, 2028,
+                                                "Toán", "CẤP BA"); 
+
+        // Novel 1: Dữ liệu KHÔNG hợp lệ (Giá: -5000 -> 1.0, Số lượng: 0 -> 1)
+        Novel stt1 = new Novel("TT001", "Hoàng Tử Bé", "B", -5000.0, 
+                                                 0, "K2-C3", TinhTrang.CU, 2010,
+                                                 "Fantasy", true);
+        
+        // 2. Thêm và kiểm tra ngoại lệ
+        quanLy.themSach(sgk1);
+        quanLy.themSach(sgk2); 
+        quanLy.themSach(stt1);
+        quanLy.themSach(sgk1); // Test: Kích hoạt lỗi SachDaTonTaiException
+
+        // 3. Thực hiện chức năng làm thêm: Mượn sách
+        System.out.println("\n--- KIỂM TRA TÍNH NĂNG MƯỢN SÁCH ---");
+        stt1.tangSoLanMuon(); 
+        
+        // 4. Hiển thị danh sách (Kiểm tra lại dữ liệu đã được gán mặc định)
+        quanLy.hienThiDanhSach();
+        
+        // 5. Thống kê và Kiểm tra
+        quanLy.thongKeSoLuongTheoLoai();
+        System.out.println("\n--- KIỂM TRA TÍNH NĂNG KHO ---");
+        System.out.println("SGK1 đủ tồn kho (>=55)? " + sgk1.kiemTraTonKho(55)); 
+    }
+}
